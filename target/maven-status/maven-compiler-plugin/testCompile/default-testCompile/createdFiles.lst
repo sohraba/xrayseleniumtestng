@@ -1,0 +1,4 @@
+app\getxray\testng\examples\LoginResultsPage.class
+app\getxray\testng\examples\RepositoryParser.class
+app\getxray\testng\examples\LoginPage.class
+app\getxray\testng\examples\LoginTests.class
