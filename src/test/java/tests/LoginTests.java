@@ -1,21 +1,18 @@
-package app.getxray.testng.examples;
+package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
-import org.testng.Reporter;
-import org.testng.reporters.XMLReporter;
-import org.testng.ITestResult;
 import app.getxray.xray.testng.annotations.XrayTest;
 import app.getxray.xray.testng.annotations.Requirement;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.Assert;
+import pages.LoginPage;
+import pages.LoginResultsPage;
+import util.RepositoryParser;
 
 @Listeners({ app.getxray.xray.testng.listeners.XrayListener.class })
 public class LoginTests {
@@ -27,7 +24,7 @@ public class LoginTests {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox"); // Bypass OS security model, to run in Docker
         options.addArguments("--headless");
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
         repo = new RepositoryParser("./src/configs/object.properties");
     }
 

@@ -1,9 +1,8 @@
-package app.getxray.testng.examples;
+package util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.nio.file.Path;
 
 public class RepositoryParser
 {

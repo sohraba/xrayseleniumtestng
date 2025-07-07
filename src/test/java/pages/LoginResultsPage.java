@@ -1,4 +1,4 @@
-package app.getxray.testng.examples;
+package pages;
 
 import org.openqa.selenium.WebDriver;
 

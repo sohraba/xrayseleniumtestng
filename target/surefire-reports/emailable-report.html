@@ -9,40 +9,11 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="8">TestAll</th></tr>
-<tr><td><a href="#t0">Webdemo</a></td><td class="num">0</td><td class="num attn">2</td><td class="num">0</td><td class="num">0</td><td class="num">16</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Webdemo</a></td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">1,829</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">TestAll</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Webdemo &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">app.getxray.testng.examples.LoginTests</td><td><a href="#m0">setUp</a></td><td rowspan="1">1751792680114</td><td rowspan="1">48</td></tr><tr><th colspan="4">Webdemo &#8212; skipped (configuration methods)</th></tr><tr class="skippedeven"><td rowspan="1">app.getxray.testng.examples.LoginTests</td><td><a href="#m1">tearDown</a></td><td rowspan="1">1751792680210</td><td rowspan="1">-1751792680210</td></tr><tr><th colspan="4">Webdemo &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="2">app.getxray.testng.examples.LoginTests</td><td><a href="#m2">invalidLogin</a></td><td rowspan="1">1751792680178</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m3">validLogin</a></td><td rowspan="1">1751792680178</td><td rowspan="1">0</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">TestAll</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Webdemo &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">app.getxray.testng.examples.LoginTests</td><td><a href="#m0">invalidLogin</a></td><td rowspan="1">1751795394509</td><td rowspan="1">1417</td></tr><tr class="passedeven"><td><a href="#m1">validLogin</a></td><td rowspan="1">1751795395928</td><td rowspan="1">386</td></tr></tbody>
 </table>
-<h2>Webdemo</h2><h3 id="m0">app.getxray.testng.examples.LoginTests#setUp</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.IllegalStateException: The path to the driver executable The path to the driver executable must be set by the webdriver.chrome.driver system property; for more information, see https://chromedriver.chromium.org/. The latest version can be downloaded from https://chromedriver.chromium.org/downloads
-	at org.openqa.selenium.internal.Require$StateChecker.nonNull(Require.java:311)
-	at org.openqa.selenium.remote.service.DriverService.findExecutable(DriverService.java:135)
-	at org.openqa.selenium.chrome.ChromeDriverService.access$000(ChromeDriverService.java:39)
-	at org.openqa.selenium.chrome.ChromeDriverService$Builder.findDefaultExecutable(ChromeDriverService.java:233)
-	at org.openqa.selenium.remote.service.DriverService$Builder.build(DriverService.java:437)
-	at org.openqa.selenium.chrome.ChromeDriverService.createServiceWithConfig(ChromeDriverService.java:142)
-	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:70)
-	at app.getxray.testng.examples.LoginTests.setUp(LoginTests.java:30)
-... Removed 21 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">app.getxray.testng.examples.LoginTests#tearDown</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m2">app.getxray.testng.examples.LoginTests#invalidLogin</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.IllegalStateException: The path to the driver executable The path to the driver executable must be set by the webdriver.chrome.driver system property; for more information, see https://chromedriver.chromium.org/. The latest version can be downloaded from https://chromedriver.chromium.org/downloads
-	at org.openqa.selenium.internal.Require$StateChecker.nonNull(Require.java:311)
-	at org.openqa.selenium.remote.service.DriverService.findExecutable(DriverService.java:135)
-	at org.openqa.selenium.chrome.ChromeDriverService.access$000(ChromeDriverService.java:39)
-	at org.openqa.selenium.chrome.ChromeDriverService$Builder.findDefaultExecutable(ChromeDriverService.java:233)
-	at org.openqa.selenium.remote.service.DriverService$Builder.build(DriverService.java:437)
-	at org.openqa.selenium.chrome.ChromeDriverService.createServiceWithConfig(ChromeDriverService.java:142)
-	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:70)
-	at app.getxray.testng.examples.LoginTests.setUp(LoginTests.java:30)
-... Removed 21 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m3">app.getxray.testng.examples.LoginTests#validLogin</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.IllegalStateException: The path to the driver executable The path to the driver executable must be set by the webdriver.chrome.driver system property; for more information, see https://chromedriver.chromium.org/. The latest version can be downloaded from https://chromedriver.chromium.org/downloads
-	at org.openqa.selenium.internal.Require$StateChecker.nonNull(Require.java:311)
-	at org.openqa.selenium.remote.service.DriverService.findExecutable(DriverService.java:135)
-	at org.openqa.selenium.chrome.ChromeDriverService.access$000(ChromeDriverService.java:39)
-	at org.openqa.selenium.chrome.ChromeDriverService$Builder.findDefaultExecutable(ChromeDriverService.java:233)
-	at org.openqa.selenium.remote.service.DriverService$Builder.build(DriverService.java:437)
-	at org.openqa.selenium.chrome.ChromeDriverService.createServiceWithConfig(ChromeDriverService.java:142)
-	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:70)
-	at app.getxray.testng.examples.LoginTests.setUp(LoginTests.java:30)
-... Removed 21 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Webdemo</h2><h3 id="m0">app.getxray.testng.examples.LoginTests#invalidLogin</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">app.getxray.testng.examples.LoginTests#validLogin</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>
