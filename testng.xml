@@ -1,7 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="TestAll">
-
+	<listeners>
+		<listener class-name="util.XrayUploadListener"/>
+	</listeners>
 	<test name="Webdemo">
 		<classes>
 			<class name="tests.LoginTests" />

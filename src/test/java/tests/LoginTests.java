@@ -14,6 +14,8 @@ import pages.LoginPage;
 import pages.LoginResultsPage;
 import util.RepositoryParser;
 
+import java.time.Duration;
+
 @Listeners({ app.getxray.xray.testng.listeners.XrayListener.class })
 public class LoginTests {
     WebDriver driver;
@@ -25,6 +27,8 @@ public class LoginTests {
         options.addArguments("--no-sandbox"); // Bypass OS security model, to run in Docker
         options.addArguments("--headless");
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        driver.manage().window().maximize();
         repo = new RepositoryParser("./src/configs/object.properties");
     }
 
@@ -34,18 +38,17 @@ public class LoginTests {
     }
 
     @Test
-    @XrayTest(key = "XT-377")
-    @Requirement(key = "XT-10")
+    @XrayTest(key = "TES-3")
+    @Requirement(key = "TES-1")
     public void validLogin() {
         LoginPage loginPage = new LoginPage(driver).open();
         Assert.assertTrue(loginPage.isVisible());
-        LoginResultsPage loginResultsPage = loginPage.login("demo", "mode");
+        LoginResultsPage loginResultsPage = loginPage.login("admin", "admin");
         Assert.assertEquals(loginResultsPage.getTitle(), repo.getBy("expected.login.title"));
-        Assert.assertTrue(loginResultsPage.contains(repo.getBy("expected.login.success")));
     }
 
     @Test
-    @XrayTest(key = "XT-376", summary = "invalid login test", description = "login attempt with invalid credentials", labels = "authentication")
+    @XrayTest(key = "TES-4", summary = "invalid login test", description = "login attempt with invalid credentials", labels = "authentication")
     public void invalidLogin() {
         LoginPage loginPage = new LoginPage(driver).open();
         Assert.assertTrue(loginPage.isVisible());

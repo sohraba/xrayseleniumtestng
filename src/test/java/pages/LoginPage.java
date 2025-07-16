@@ -31,17 +31,17 @@ public class LoginPage {
     }
 
     public void setUsername(String username) {
-        usernameElement = driver.findElement(By.id(repo.getBy("username.field.id")));
+        usernameElement = driver.findElement(By.name(repo.getBy("username.field.name")));
         usernameElement.sendKeys(username);
     }
 
     public void setPassword(String password) {
-        passwordElement = driver.findElement(By.id(repo.getBy("password.field.id")));
+        passwordElement = driver.findElement(By.name(repo.getBy("password.field.name")));
         passwordElement.sendKeys(password);
     }
 
     public WebElement getSubmitButton(){
-        submitButtonElement = driver.findElement(By.id(repo.getBy("login.button.id")));
+        submitButtonElement = driver.findElement(By.name(repo.getBy("login.button.name")));
         return submitButtonElement;
     }
 
