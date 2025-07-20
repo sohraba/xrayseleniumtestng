@@ -17,7 +17,6 @@ import javax.xml.parsers.*;
 import java.io.*;
 
 import org.json.*;
-import org.xml.sax.SAXException;
 
 public class XrayUploadListener implements ISuiteListener {
 
@@ -25,15 +24,16 @@ public class XrayUploadListener implements ISuiteListener {
     public void onFinish(ISuite suite) {
         System.out.println("I am in On finish");
         try {
-            String testExecKey = "TES-5"; // Optional if using ?projectKey=XYZ
-            String reportPath = "xray-result.json";
-            File reportFile = new File(reportPath);
-            // generateTestNGJson();
+            RepositoryParser repo = new RepositoryParser("./src/configs/object.properties");
+            // Specify the input TestNG XML result file
+            String testngXmlFile = "target\\surefire-reports\\testng-results.xml";  // Path to the TestNG XML file
+            String testExecutionKey = repo.getBy("testExecutionKey");  // Your test execution key
 
-            if (!reportFile.exists()) {
-                System.out.println("Report file not found: " + reportPath);
-                return;
-            }
+            // Convert the TestNG XML to Xray JSON format
+            JSONObject xrayJson = convertToXrayJson(testngXmlFile, testExecutionKey);
+
+            // Write the generated Xray JSON to "xray-result.json"
+            writeJsonToFile(xrayJson, "xray-result.json");
             uploadJsonToXray();
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,61 +83,74 @@ public class XrayUploadListener implements ISuiteListener {
         }
     }
 
-    public void generateTestNGJson() throws ParserConfigurationException, IOException, SAXException {
-        File xmlFile = new File("target/surefire-reports/testng-results.xml");
-
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(xmlFile);
-
+    // Method to extract Xray test IDs and statuses from the TestNG XML and generate Xray JSON
+    public static JSONObject convertToXrayJson(String testngXmlFile, String testExecutionKey) throws Exception {
+        // Parse the TestNG XML result file
+        File xmlFile = new File(testngXmlFile);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(xmlFile);
         doc.getDocumentElement().normalize();
 
+        // Create a JSON object to hold the final result
         JSONObject xrayJson = new JSONObject();
-        xrayJson.put("testExecutionKey", "TES-5");
+        xrayJson.put("testExecutionKey", testExecutionKey);
 
-        JSONObject info = new JSONObject();
-        info.put("summary", "Test Execution from TestNG");
-        info.put("description", "Auto generated from TestNG XML");
-        xrayJson.put("info", info);
+        // Create a JSON array to hold all the test details
+        JSONArray testsArray = new JSONArray();
 
-        JSONArray tests = new JSONArray();
-
+        // Extract the <test-method> nodes from the XML
         NodeList testMethods = doc.getElementsByTagName("test-method");
+
         for (int i = 0; i < testMethods.getLength(); i++) {
-            Element method = (Element) testMethods.item(i);
+            Node testMethodNode = testMethods.item(i);
 
-            String name = method.getAttribute("name");
-            String status = method.getAttribute("status");
-            String testKey = "TES-" + (i);  // Map your own test keys here
+            if (testMethodNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element testMethodElement = (Element) testMethodNode;
 
-            JSONObject test = new JSONObject();
-            test.put("testKey", testKey);
+                // Extract the test status (PASS/FAIL)
+                String status = testMethodElement.getAttribute("status");
 
-            // Map TestNG status to Xray status
-            switch (status.toLowerCase()) {
-                case "pass":
-                    test.put("status", "PASSED");
-                    break;
-                case "fail":
-                    test.put("status", "FAILED");
-                    break;
-                case "skip":
-                    test.put("status", "SKIPPED");
-                    break;
-                default:
-                    test.put("status", "FAILED");
+                // Extract the <attributes> element to find the "test" key
+                NodeList attributesList = testMethodElement.getElementsByTagName("attributes");
+                for (int j = 0; j < attributesList.getLength(); j++) {
+                    Element attributesElement = (Element) attributesList.item(j);
+
+                    // Extract the <attribute> with name "test"
+                    NodeList attributeList = attributesElement.getElementsByTagName("attribute");
+                    for (int k = 0; k < attributeList.getLength(); k++) {
+                        Element attributeElement = (Element) attributeList.item(k);
+                        String attributeName = attributeElement.getAttribute("name");
+
+                        // Check if the attribute name is "test", which contains the Xray test ID (e.g., TES-3)
+                        if ("test".equals(attributeName)) {
+                            // Trim the text content to remove any extra whitespace
+                            String testID = attributeElement.getTextContent().trim();
+
+                            // Create a JSON object for each test
+                            JSONObject testJson = new JSONObject();
+                            testJson.put("testKey", testID);  // Now it's properly trimmed
+                            testJson.put("status", status);
+
+                            // Add the test JSON object to the tests array
+                            testsArray.put(testJson);
+                        }
+                    }
+                }
             }
-
-            tests.put(test);
         }
 
-        xrayJson.put("tests", tests);
+        // Add the tests array to the main Xray JSON object
+        xrayJson.put("tests", testsArray);
 
-        try (FileWriter file = new FileWriter("xray-result.json")) {
-            file.write(xrayJson.toString(2));  // pretty print
-        }
-
-        System.out.println("Xray JSON generated: xray-result.json");
+        return xrayJson;
     }
 
+    // Method to write the Xray JSON result into a file
+    public static void writeJsonToFile(JSONObject json, String fileName) throws IOException {
+        // Create a FileWriter to write to the file
+        try (FileWriter file = new FileWriter(fileName)) {
+            file.write(json.toString(2));  // Pretty print the JSON with an indent of 2
+        }
+    }
 }

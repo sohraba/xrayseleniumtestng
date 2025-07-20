@@ -39,7 +39,6 @@ public class LoginTests {
 
     @Test
     @XrayTest(key = "TES-3")
-    @Requirement(key = "TES-1")
     public void validLogin() {
         LoginPage loginPage = new LoginPage(driver).open();
         Assert.assertTrue(loginPage.isVisible());
@@ -55,6 +54,11 @@ public class LoginTests {
         LoginResultsPage loginResultsPage = loginPage.login("demo", "invalid");
         Assert.assertEquals(loginResultsPage.getTitle(), repo.getBy("expected.error.title"));
         Assert.assertTrue(loginResultsPage.contains(repo.getBy("expected.login.failed")));
+    }
+    @Test
+    @XrayTest(key = "TES-8")
+    public void inValidLoginTest() {
+        System.out.println("I am in valid login test");
     }
 
 }
